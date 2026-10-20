@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Navi Archive</title>
+    <script>
+      /* 主题引导：先于首帧写入 data-theme，避免闪色。
+         优先 localStorage，否则跟随系统 prefers-color-scheme。 */
+      (function () {
+        var t = 'dark';
+        try {
+          var saved = localStorage.getItem('navi-theme');
+          t = saved || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        } catch (e) { /* ignore */ }
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Rajdhani"', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'monospace'],
+            },
+            colors: {
+              /* 颜色走 CSS 变量（main.css 的 :root / [data-theme=light] 提供值），
+                 暗亮色切换只换变量，Tailwind 语义类（bg-theme-* 等）不用改。 */
+              theme: {
+                base: 'rgb(var(--c-base) / <alpha-value>)',
+                surface: 'rgb(var(--c-surface) / <alpha-value>)',
+                surfaceLight: 'rgb(var(--c-surfaceLight) / <alpha-value>)',
+                border: 'rgb(var(--c-border) / <alpha-value>)',
+                primary: 'rgb(var(--c-primary) / <alpha-value>)',
+                secondary: 'rgb(var(--c-secondary) / <alpha-value>)',
+                text: 'rgb(var(--c-text) / <alpha-value>)',
+                textMuted: 'rgb(var(--c-textMuted) / <alpha-value>)',
+                accent: 'rgb(var(--c-accent) / <alpha-value>)',
+                dim: 'rgb(var(--c-dim) / <alpha-value>)'
+              }
+            },
+            animation: {
+              'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'slide-up': 'slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+              'scan': 'holoScan 3s linear infinite',
+            },
+            keyframes: {
+              slideUpFade: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              holoScan: {
+                '0%': { backgroundPosition: '200% 0' },
+                '100%': { backgroundPosition: '-200% 0' },
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-wjygM-Dm.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CTZHR1bv.css">
+  </head>
+  <body class="antialiased">
+    <div id="root"></div>
+  </body>
+</html>
