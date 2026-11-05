@@ -15,6 +15,17 @@
         } catch (e) { /* ignore */ }
         document.documentElement.dataset.theme = t;
       })();
+      /* 显示设置引导：先于首帧写 data-fx-*，避免刷新后光效先亮一下再被关掉。
+         key 列表与 App.jsx 的 FX_DEFS 必须同步；默认全开（无存储 = 不写 off）。 */
+      (function () {
+        try {
+          var fx = JSON.parse(localStorage.getItem('navi-fx') || '{}');
+          var d = document.documentElement.dataset;
+          ['hue', 'dots', 'ticks', 'shadow', 'mouse', 'sidebar'].forEach(function (k) {
+            d['fx' + k.charAt(0).toUpperCase() + k.slice(1)] = fx[k] === false ? 'off' : 'on';
+          });
+        } catch (e) { /* ignore */ }
+      })();
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,8 +74,8 @@
         }
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-C7vbtbD1.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BuUuQDoR.css">
+    <script type="module" crossorigin src="./assets/index-CH1H5jH_.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-dXdHhRbs.css">
   </head>
   <body class="antialiased">
     <div id="root"></div>
